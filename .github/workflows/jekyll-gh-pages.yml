@@ -1,4 +1,4 @@
-# Workflow for deploying static content from 'card_gacha_web' to GitHub Pages
+# Workflow for deploying static content from 'card_gacha_web/template' to GitHub Pages
 name: Deploy card_gacha_web to Pages
 
 on:
@@ -28,11 +28,11 @@ jobs:
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v5
 
-      - name: Upload artifact from 'card_gacha_web'
+      # 仅上传 card_gacha_web/template/ 作为 GitHub Pages 部署目录
+      - name: Upload artifact from 'card_gacha_web/template'
         uses: actions/upload-pages-artifact@v3
         with:
-          # 只上传 'card_gacha_web' 目录，而不是整个仓库
-          path: 'card_gacha_web/'
+          path: 'card_gacha_web/template/'
 
       - name: Deploy to GitHub Pages
         id: deployment
