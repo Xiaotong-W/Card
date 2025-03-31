@@ -32,7 +32,7 @@ jobs:
       - name: Upload artifact from 'card_gacha_web/templates'
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'card_gacha_web/template/'
+          path: 'card_gacha_web/templates/'
 
       - name: Deploy to GitHub Pages
         id: deployment
