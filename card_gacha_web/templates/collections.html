@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>套卡收集进度</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>📜 套卡收集进度</h1>
+
+    {% for collection_name, cards in collections.items() %}
+        <div class="collection">
+            <h2>{{ collection_name }}</h2>
+            <div class="card-container">
+                {% for card in cards %}
+                    <div class="card">
+                        {% if card in owned_cards %}
+                            <!-- 已收集的卡片 -->
+                            <img src="{{ url_for('static', filename=card) }}" alt="{{ card }}">
+                        {% else %}
+                            <!-- 未收集的卡片 -->
+                            <img src="{{ url_for('static', filename='grey_placeholder.png') }}" class="grayscale" alt="未解锁">
+                        {% endif %}
+                        <p>{{ card }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+
+    <br><a href="/">返回主页</a>
+</body>
+</html>

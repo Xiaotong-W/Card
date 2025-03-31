@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>抽卡模拟器</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>🎴 欢迎来到抽卡模拟器！</h1>
+
+    <div class="button-container">
+        <button onclick="drawCard(1)">抽 1 次</button>
+        <button onclick="drawCard(10)">抽 10 次</button>
+        <br><br>
+        <a href="/gallery"><button>查看我的画廊</button></a>
+        <a href="/collections"><button>查看套卡收集进度</button></a>
+    </div>
+
+    <div id="result"></div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>卡牌画廊</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>🎴 卡牌画廊</h1>
+    {% for rarity, cards in all_cards.items() %}
+    <h2>{{ rarity }}</h2>
+    <div class="card-container">
+        {% for name, img_path in cards %}
+            <div class="card">
+                {% if name in owned_cards %}
+                    <img src="{{ img_path }}" alt="{{ name }}">
+                {% else %}
+                    <img src="/static/images/unknown.png" class="grayscale">
+                {% endif %}
+                <p>{{ name }}</p>
+            </div>
+        {% endfor %}
+    </div>
+{% endfor %}
+
+    <h2>📜 套卡收集进度</h2>
+    {% for set_name, card_list in collections.items() %}
+        <h3>{{ set_name }}</h3>
+        <p>
+            {{ collected_cards | length }} / {{ card_list | length }} 已收集
+            {% if collected_cards | length == card_list | length %}
+                ✅ 完成！
+            {% else %}
+                ⏳ 继续收集中...
+            {% endif %}
+        </p>
+    {% endfor %}
+
+    <a href="/">返回主页</a>
+</body>
+</html>
