@@ -18,7 +18,7 @@ def load_card_pool(image_folder=IMAGE_FOLDER):
         if filename.endswith((".png", ".jpg")):  # 兼容 PNG & JPG
             for rarity, prefix in RARITY_PREFIX.items():
                 if filename.startswith(prefix):  # 检查稀有度是否匹配
-                    card_name = filename.replace(".png", "").replace(".jpg", "").replace(prefix, "").capitalize()
+                    card_name = filename.split("_", 1)[1].replace(".png", "").replace(".jpg", "").strip()
                     card_pool[rarity].append((card_name, os.path.join(image_folder, filename)))
 
     collections = load_collections()  # 读取套卡

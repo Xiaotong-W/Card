@@ -1,24 +1,36 @@
+// static/script.js
 function drawCard(n) {
+    const resultDiv = document.getElementById("result");
+    resultDiv.innerHTML = '<div class="loading"></div>';
+
     fetch(`/draw/${n}`)
-    .then(response => response.json())
-    .then(data => {
-        let resultDiv = document.getElementById("result");
-        resultDiv.innerHTML = "";  // 清空之前的结果
+        .then(response => response.json())
+        .then(data => {
+            let html = '';
+            data.forEach(card => {
+                html += `
+                <div class="card-result" data-rarity="${getRarity(card.file)}">
+                    <img src="/static/images/${card.file}" alt="${card.name}">
+                    <p>${card.name}</p>
+                </div>`;
+            });
+            resultDiv.innerHTML = html;
 
-        data.forEach(card => {
-            let cardDiv = document.createElement("div");
-            cardDiv.className = "card";
-
-            let img = document.createElement("img");
-            img.src = card[1];  // 使用卡片的图片路径
-            img.alt = card[0];
-
-            let text = document.createElement("p");
-            text.textContent = `🎴 ${card[0]}`;
-
-            cardDiv.appendChild(img);
-            cardDiv.appendChild(text);
-            resultDiv.appendChild(cardDiv);
+            // 添加入场动画
+            setTimeout(() => {
+                document.querySelectorAll('.card-result').forEach(el => {
+                    el.style.opacity = 1;
+                    el.style.transform = 'scale(1)';
+                });
+            }, 50);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            resultDiv.innerHTML = '<p class="error">抽卡失败，请稍后重试</p>';
         });
-    });
+}
+
+// 获取稀有度标识
+function getRarity(filename) {
+    return filename.split('_')[0].toUpperCase();
 }

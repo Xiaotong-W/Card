@@ -2,40 +2,31 @@
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>卡牌画廊</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>🎴 卡牌画廊</h1>
-    {% for rarity, cards in all_cards.items() %}
-    <h2>{{ rarity }}</h2>
-    <div class="card-container">
-        {% for name, img_path in cards %}
-            <div class="card">
-                {% if name in owned_cards %}
-                    <img src="{{ img_path }}" alt="{{ name }}">
-                {% else %}
-                    <img src="/static/images/unknown.png" class="grayscale">
-                {% endif %}
-                <p>{{ name }}</p>
+    <h1>我的卡牌画廊</h1>
+
+    <div class="card-gallery">
+        {% for rarity, cards in all_cards.items() %}
+            <h2>{{ rarity }}</h2>
+            <div class="cards">
+                {% for card_name, card_img in cards %}
+                    <div class="card {% if card_name in owned_cards %} {{ rarity.lower() }} {% else %} gray {% endif %}">  <!-- 根据稀有度添加类 -->
+
+                        {% if card_name in owned_cards %}
+                            <img src="{{ card_img }}" alt="{{ card_name }}" class="card-img">
+                        {% else %}
+                            <img src="{{ url_for('static', filename='grey.png') }}" alt="{{ card_name }}" class="card-img">
+                        {% endif %}
+                    </div>
+                {% endfor %}
             </div>
         {% endfor %}
     </div>
-{% endfor %}
 
-    <h2>📜 套卡收集进度</h2>
-    {% for set_name, card_list in collections.items() %}
-        <h3>{{ set_name }}</h3>
-        <p>
-            {{ collected_cards | length }} / {{ card_list | length }} 已收集
-            {% if collected_cards | length == card_list | length %}
-                ✅ 完成！
-            {% else %}
-                ⏳ 继续收集中...
-            {% endif %}
-        </p>
-    {% endfor %}
-
-    <a href="/">返回主页</a>
+    <a href="/"><button>返回首页</button></a>
 </body>
 </html>
